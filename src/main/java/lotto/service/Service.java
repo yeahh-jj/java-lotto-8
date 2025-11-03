@@ -36,12 +36,12 @@ public class Service {
         long totalPrize = 0;
 
         for (Map.Entry<Rank, Long> entry : rankResults.entrySet()) {
-            Rank rank = entry.getKey();       // 등수
-            long count = entry.getValue();    // 해당 등수 개수
-            totalPrize += rank.getPrizeMoney() * count;  // 등수별 상금 * 개수
+            Rank rank = entry.getKey();
+            long count = entry.getValue();
+            totalPrize += rank.getPrizeMoney() * count;
         }
 
         double profitRate = (double) totalPrize / purchaseAmount * 100;
-        return Math.round(profitRate * 10) / 10.0; // 소수점 둘째 자리 반올림
+        return Math.round(profitRate * 10) / 10.0;
     }
 }

@@ -6,10 +6,18 @@ import java.util.List;
 public class Validator {
     private final static int MIN = 1;
     private final static int MAX = 45;
+    private final static int LOTTO_NUMBER_COUNT = 6;
 
     public static void validateNumbers(List<Integer> numbers) {
+        validateNumberCount(numbers);
         duplicateNumber(numbers);
         rangeOfNumbers(numbers);
+    }
+
+    private static void validateNumberCount(List<Integer> numbers) {
+        if (numbers.size() != LOTTO_NUMBER_COUNT) {
+            throw new IllegalArgumentException("[ERROR] 로또 번호는 6개 입력해야 합니다.");
+        }
     }
 
     private static void duplicateNumber(List<Integer> numbers) {
