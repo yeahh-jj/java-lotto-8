@@ -7,7 +7,7 @@ public class Validator {
     private final static int MIN = 1;
     private final static int MAX = 45;
 
-    public static void validateNumber(List<Integer> numbers) {
+    public static void validateNumbers(List<Integer> numbers) {
         duplicateNumber(numbers);
         rangeOfNumbers(numbers);
     }
