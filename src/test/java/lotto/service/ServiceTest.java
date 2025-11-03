@@ -14,7 +14,6 @@ public class ServiceTest {
     @Test
     void 구입_금액에_따라_로또_개수가_발행되는지_확인() {
         Service service = new Service();
-
         List<Lotto> lottos = service.purchaseLottos(8000);
 
         assertThat(lottos).hasSize(8);

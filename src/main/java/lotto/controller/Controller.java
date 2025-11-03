@@ -15,6 +15,7 @@ public class Controller {
     private int purchaseAmount;
     private List<Lotto> userLottos;
     private WinningNumbers winningNumbers;
+    private Lotto winningLotto;
 
     public void run() {
         handlePurchaseAmount();
@@ -24,40 +25,53 @@ public class Controller {
 
     private void handlePurchaseAmount() {
         while (true) {
-            try {
-                String input = InputView.inputPurchaseAmount();
-                purchaseAmount = Parser.parsePurchaseAmount(input);
-                userLottos = service.purchaseLottos(purchaseAmount);
-                OutputView.outputPurchaseResult(userLottos);
+            if (tryPurchase()) {
                 return;
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
             }
         }
     }
 
-    private void handleWinningNumbers() {
-        Lotto winningLotto = null;
-
-        while (winningLotto == null) {
-            try {
-                String inputWinning = InputView.inputWinningNumbers();
-                List<Integer> winningNums = Parser.parseNumbers(inputWinning);
-                winningLotto = new Lotto(winningNums);
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
+    private boolean tryPurchase() {
+        try {
+            String input = InputView.inputPurchaseAmount();
+            purchaseAmount = Parser.parsePurchaseAmount(input);
+            userLottos = service.purchaseLottos(purchaseAmount);
+            OutputView.outputPurchaseResult(userLottos);
+            return true;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return false;
         }
+    }
 
-        while (true) {
-            try {
-                String inputBonus = InputView.inputBonusNumber();
-                int bonusNumber = Parser.parseBonusNumber(inputBonus);
-                winningNumbers = new WinningNumbers(winningLotto, bonusNumber);
-                return;
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
+    private void handleWinningNumbers() {
+        while (!tryWinningLotto()) {
+        }
+        while (!tryBonusNum()) {
+        }
+    }
+
+    private boolean tryWinningLotto() {
+        try {
+            String inputWinning = InputView.inputWinningNumbers();
+            List<Integer> winningNums = Parser.parseNumbers(inputWinning);
+            winningLotto = new Lotto(winningNums);
+            return true;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    private boolean tryBonusNum() {
+        try {
+            String inputBonus = InputView.inputBonusNumber();
+            int bonusNumber = Parser.parseBonusNumber(inputBonus);
+            winningNumbers = new WinningNumbers(winningLotto, bonusNumber);
+            return true;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return false;
         }
     }
 

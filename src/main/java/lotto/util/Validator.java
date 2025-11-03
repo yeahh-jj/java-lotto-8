@@ -67,5 +67,4 @@ public class Validator {
             throw new IllegalArgumentException("[ERROR] 당첨 번호에 포함된 번호는 입력할 수 없습니다.");
         }
     }
-
 }
